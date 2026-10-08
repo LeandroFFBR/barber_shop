@@ -1,0 +1,315 @@
+@{
+    ViewData["Title"] = "Barbearia Clássica & Club Masculino";
+    var servicos = ViewBag.Servicos as List<BarbeariaWeb.Models.Servico> ?? new();
+    var barbeiros = ViewBag.Barbeiros as List<BarbeariaWeb.Models.Barbeiro> ?? new();
+}
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="hero-overlay-pattern"></div>
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="badge-gold mb-3">
+                    <i class="bi bi-award-fill"></i> Tradição & Excelência em São Paulo
+                </span>
+                
+                <h1 class="hero-title">
+                    Estilo Impecável, <br />
+                    <span class="hero-highlight">Navalha Afiada</span> & Tradição.
+                </h1>
+                
+                <p class="hero-lead">
+                    Mais do que um corte ou barba: um refúgio para desacelerar com toalha aromatizada a vapor, café espresso ou whisky single malt e a técnica impecável dos mestres barbeiros.
+                </p>
+                
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Agendamento" asp-action="Index" class="btn-gold">
+                        <i class="bi bi-calendar2-check-fill"></i> Agendar Meu Horário
+                    </a>
+                    <a asp-controller="Home" asp-action="Servicos" class="btn-gold-outline">
+                        <i class="bi bi-scissors"></i> Ver Serviços & Preços
+                    </a>
+                </div>
+
+                <!-- Estatísticas de Confiança -->
+                <div class="row hero-stats-row">
+                    <div class="col-4 stat-item">
+                        <h3>+15k</h3>
+                        <p>Atendimentos</p>
+                    </div>
+                    <div class="col-4 stat-item">
+                        <h3>4.98</h3>
+                        <p>Estrelas Google</p>
+                    </div>
+                    <div class="col-4 stat-item">
+                        <h3>100%</h3>
+                        <p>Pontualidade</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-visual-card">
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Interior Luxuoso da Barbearia Dom Navalha" 
+                         class="hero-img shadow-lg" />
+                    
+                    <div class="hero-floating-badge">
+                        <div class="brand-icon" style="width: 48px; height: 48px; font-size: 1.5rem;">
+                            <i class="bi bi-cup-hot-fill"></i>
+                        </div>
+                        <div>
+                            <div class="text-white fw-bold small">Experiência Gentleman</div>
+                            <div class="text-warning small" style="font-size: 0.78rem;">Whisky, Café & Toalha Quente Cortesia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DIFERENCIAIS DA BARBEARIA -->
+<section class="py-5" style="background: #101217; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="service-icon-box flex-shrink-0 m-0">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-white mb-1 font-heading" style="font-size: 1.1rem;">Sem Filas de Espera</h5>
+                        <p class="small text-secondary mb-0">Agendamento 100% digital e pontualidade rigorosa para respeitar seu dia.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="service-icon-box flex-shrink-0 m-0">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-white mb-1 font-heading" style="font-size: 1.1rem;">Higiene Hospitalar</h5>
+                        <p class="small text-secondary mb-0">Lâminas descartáveis de uso único e esterilização de instrumentos em autoclave.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="service-icon-box flex-shrink-0 m-0">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-white mb-1 font-heading" style="font-size: 1.1rem;">Mestres da Cutelaria</h5>
+                        <p class="small text-secondary mb-0">Profissionais visagistas especializados em cortes clássicos e tendências modernas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="service-icon-box flex-shrink-0 m-0">
+                        <i class="bi bi-gem"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-white mb-1 font-heading" style="font-size: 1.1rem;">Lounge & Bar</h5>
+                        <p class="small text-secondary mb-0">Ambiente climatizado, poltronas em couro legítimo, bilhar e bebidas especiais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVIÇOS EM DESTAQUE -->
+<section class="py-5 position-relative">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-gold mb-2">Cardápio Exclusivo</span>
+            <h2 class="display-6 text-white mb-3">Nossos Serviços em Destaque</h2>
+            <div class="gold-divider-center"></div>
+            <p class="text-secondary">
+                Cada serviço é executado com precisão milimétrica, produtos premium importados e respeito ao seu estilo pessoal.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var servico in servicos.Take(4))
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        @if (servico.Destaque)
+                        {
+                            <span class="service-badge"><i class="bi bi-star-fill text-warning me-1"></i> Mais Pedido</span>
+                        }
+                        
+                        <div>
+                            <div class="service-icon-box">
+                                @if (servico.Categoria == "Barba")
+                                {
+                                    <i class="bi bi-feather"></i>
+                                }
+                                else if (servico.Categoria == "Combos")
+                                {
+                                    <i class="bi bi-trophy"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-scissors"></i>
+                                }
+                            </div>
+                            
+                            <h4 class="text-white mb-2" style="font-size: 1.25rem;">@servico.Nome</h4>
+                            <p class="small text-secondary mb-3" style="min-height: 65px;">@servico.Descricao</p>
+                        </div>
+
+                        <div class="pt-3 border-top border-secondary border-opacity-25">
+                            <div class="d-flex justify-content-between align-items-baseline mb-3">
+                                <span class="service-price">@servico.Preco.ToString("C")</span>
+                                <span class="service-duration"><i class="bi bi-clock me-1"></i> @servico.DuracaoMinutos min</span>
+                            </div>
+                            <a asp-controller="Agendamento" asp-action="Index" asp-route-servicoId="@servico.Id" class="btn-gold-outline w-100 btn-sm text-center">
+                                Reservar Este
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-5">
+            <a asp-controller="Home" asp-action="Servicos" class="btn btn-outline-secondary px-4 text-warning border-secondary">
+                Ver Todos os @servicos.Count Serviços do Cardápio <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- NOSSOS MESTRES BARBEIROS -->
+<section class="py-5" style="background: #0f1014;">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-gold mb-2">Equipe Especialista</span>
+            <h2 class="display-6 text-white mb-3">Os Mestres da Cutelaria</h2>
+            <div class="gold-divider-center"></div>
+            <p class="text-secondary">
+                Profissionais experientes prontos para entregar a melhor experiência de barbearia tradicional.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var barbeiro in barbeiros)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="barber-card">
+                        <div class="barber-img-container">
+                            <img src="@barbeiro.FotoUrl" alt="@barbeiro.Nome" class="barber-img" />
+                            <div class="barber-rating-pill">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span>@barbeiro.Avaliacao.ToString("F1")</span>
+                                <span class="text-secondary small">(@barbeiro.TotalAtendimentos)</span>
+                            </div>
+                        </div>
+                        <div class="barber-info">
+                            <h4 class="text-white barber-name font-heading">@barbeiro.Nome</h4>
+                            <div class="barber-title">@barbeiro.Titulo</div>
+                            <p class="small text-secondary mb-3" style="min-height: 60px;">@barbeiro.Bio</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-25">
+                                <span class="small text-muted"><i class="bi bi-shield-check text-warning me-1"></i> @barbeiro.ExperienciaAnos anos de prática</span>
+                                <a asp-controller="Agendamento" asp-action="Index" asp-route-barbeiroId="@barbeiro.Id" class="btn-gold btn-sm px-3 py-1">
+                                    Agendar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- DEPOIMENTOS DE CLIENTES -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-gold mb-2">Avaliações Reais</span>
+            <h2 class="display-6 text-white mb-3">O Que Nossos Clientes Dizem</h2>
+            <div class="gold-divider-center"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="small text-light italic mb-4">
+                        "Melhor barbearia de São Paulo! O atendimento do Vicente é de outro planeta. A toalha quente com o café no final faz o dia começar muito melhor."
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="brand-icon" style="width: 40px; height: 40px; font-size: 1rem;">M</div>
+                        <div>
+                            <div class="fw-bold text-white small">Marcelo Fontana</div>
+                            <div class="text-muted small">Cliente há 3 anos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="small text-light italic mb-4">
+                        "Fiz o Combo Imperial antes do meu casamento. O corte na tesoura e a barba ficaram impecáveis. O sistema de agendamento online é super rápido."
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="brand-icon" style="width: 40px; height: 40px; font-size: 1rem;">R</div>
+                        <div>
+                            <div class="fw-bold text-white small">Rodrigo Camargo</div>
+                            <div class="text-muted small">Cliente frequente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="small text-light italic mb-4">
+                        "Ambiente aconchegante, pontualidade britânica e o Fade do Eduardo é o mais alinhado da região. Vale cada centavo!"
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="brand-icon" style="width: 40px; height: 40px; font-size: 1rem;">G</div>
+                        <div>
+                            <div class="fw-bold text-white small">Gustavo Pires</div>
+                            <div class="text-muted small">Cliente mensal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CALL TO ACTION BANNER -->
+<section class="py-5" style="background: radial-gradient(circle at center, rgba(212, 175, 55, 0.2) 0%, transparent 70%), #141720;">
+    <div class="container py-4 text-center">
+        <span class="badge-gold mb-3">Horários Limitados</span>
+        <h2 class="display-5 text-white mb-3">Pronto para Elevar Seu Estilo?</h2>
+        <p class="text-secondary max-w-600 mx-auto mb-4" style="max-width: 600px;">
+            Escolha seu serviço preferido, seu barbeiro de confiança e reserve seu horário em menos de 1 minuto sem complicação.
+        </p>
+        <a asp-controller="Agendamento" asp-action="Index" class="btn-gold btn-lg px-5 py-3">
+            <i class="bi bi-calendar2-check-fill me-2"></i> Reservar Meu Horário Agora
+        </a>
+    </div>
+</section>

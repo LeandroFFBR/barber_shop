@@ -1,0 +1,113 @@
+@model BarbeariaWeb.ViewModels.ConsultaReservaViewModel
+@{
+    ViewData["Title"] = "Consultar Agendamento";
+}
+
+<section class="py-5" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 60%), #12141a; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-3 text-center">
+        <span class="badge-gold mb-2"><i class="bi bi-search"></i> Acompanhamento</span>
+        <h1 class="display-5 text-white mb-2">Consulte Suas Reservas</h1>
+        <div class="gold-divider-center"></div>
+        <p class="text-secondary mx-auto mb-0" style="max-width: 650px;">
+            Digite o seu Telefone ou o Código da sua reserva (ex: DOM-1042) para consultar seus horários marcados.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container" style="max-width: 820px;">
+        <div class="vintage-card p-4 p-md-5 mb-4">
+            <form asp-action="MinhasReservas" method="get">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-9">
+                        <label class="form-label-vintage">Digite seu Telefone, WhatsApp ou Código</label>
+                        <input type="text" name="termo" value="@Model.TermoBusca" class="input-vintage" 
+                               placeholder="Ex: (11) 98765-4321 ou DOM-1042" required />
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn-gold w-100 py-3 mt-3 mt-md-0">
+                            <i class="bi bi-search me-1"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @if (Model.JaBuscou)
+        {
+            @if (Model.Resultados != null && Model.Resultados.Any())
+            {
+                <h4 class="text-white mb-3 font-heading">
+                    <i class="bi bi-check-circle-fill text-warning me-2"></i> Reservas Encontradas (@Model.Resultados.Count)
+                </h4>
+
+                <div class="d-flex flex-column gap-3">
+                    @foreach (var res in Model.Resultados)
+                    {
+                        <div class="vintage-card p-4">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                                <div>
+                                    <span class="text-muted small">Código:</span>
+                                    <strong class="text-warning font-heading fs-5 ms-1">@res.CodigoReserva</strong>
+                                </div>
+                                <div>
+                                    @if (res.Status == "Confirmado")
+                                    {
+                                        <span class="status-pill status-confirmado">@res.Status</span>
+                                    }
+                                    else if (res.Status == "Concluído")
+                                    {
+                                        <span class="status-pill status-concluido">@res.Status</span>
+                                    }
+                                    else if (res.Status == "Cancelado")
+                                    {
+                                        <span class="status-pill status-cancelado">@res.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-pill status-pendente">@res.Status</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <div class="text-muted small">Cliente:</div>
+                                    <div class="text-white fw-bold">@res.NomeCliente</div>
+                                    <div class="text-secondary small">@res.TelefoneCliente</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-muted small">Serviço:</div>
+                                    <div class="text-white fw-bold">@res.Servico?.Nome</div>
+                                    <div class="text-warning small">@res.Servico?.Preco.ToString("C")</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-muted small">Barbeiro:</div>
+                                    <div class="text-white fw-bold">@res.Barbeiro?.Nome</div>
+                                    <div class="text-secondary small">@res.Barbeiro?.Titulo</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-muted small">Data e Horário:</div>
+                                    <div class="text-warning fw-bold fs-5">@res.DataHora.ToString("dd/MM/yyyy às HH:mm")</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="vintage-card p-5 text-center">
+                    <i class="bi bi-calendar-x text-warning display-4 mb-3 d-block"></i>
+                    <h4 class="text-white font-heading">Nenhuma reserva encontrada</h4>
+                    <p class="text-secondary small mb-4">
+                        Não encontramos agendamentos para o termo buscado ("@Model.TermoBusca"). Verifique os dígitos do telefone ou código.
+                    </p>
+                    <a asp-action="Index" class="btn-gold">
+                        <i class="bi bi-calendar-plus me-1"></i> Fazer um Agendamento Agora
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</section>

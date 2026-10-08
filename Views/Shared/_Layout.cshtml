@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dom Navalha | Barbearia Clássica & Club</title>
+    <meta name="description" content="Dom Navalha - A autêntica experiência de barbearia tradicional vintage com toalha quente, navalha afiada, whisky cortesia e mestres barbeiros." />
+    
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    
+    <!-- Custom Theme Stylesheet -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Top Announcement Bar -->
+    <div class="py-2 d-none d-md-block" style="background: #08090b; border-bottom: 1px solid rgba(212, 175, 55, 0.15); font-size: 0.82rem; color: #8e95a5;">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+                <span><i class="bi bi-geo-alt text-warning me-1"></i> Rua Augusta, 1420 - Jardins, São Paulo</span>
+                <span><i class="bi bi-clock text-warning me-1"></i> Terça a Sábado: 09h às 20h</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="nav-badge-status"><span class="pulse-dot"></span> Barbearia Aberta</span>
+                <span class="text-secondary">|</span>
+                <a href="tel:11999998888" class="text-secondary"><i class="bi bi-telephone me-1 text-warning"></i> (11) 99999-8888</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header>
+        <nav class="navbar navbar-expand-lg vintage-navbar">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <span class="brand-icon">
+                        <i class="bi bi-scissors"></i>
+                    </span>
+                    <span>Dom Navalha</span>
+                </a>
+
+                <button class="navbar-toggler border-0 text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Menu de Navegação">
+                    <i class="bi bi-list fs-2 text-warning"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-1">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" && ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Index">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Sobre" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Sobre">A Barbearia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Servicos" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Servicos">Serviços & Preços</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "MinhasReservas" ? "active" : "")" 
+                               asp-controller="Agendamento" asp-action="MinhasReservas">Minhas Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contato" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Contato">Contato</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <a asp-controller="Agendamento" asp-action="Gerenciar" class="text-secondary small d-none d-xl-inline text-decoration-none">
+                            <i class="bi bi-shield-lock me-1"></i> Painel
+                        </a>
+                        <a asp-controller="Agendamento" asp-action="Index" class="btn-gold">
+                            <i class="bi bi-calendar2-check-fill"></i> Reservar Horário
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Vintage Gentleman Footer -->
+    <footer class="vintage-footer">
+        <div class="container">
+            <div class="row g-4 pb-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-icon"><i class="bi bi-scissors"></i></span>
+                        <h4 class="m-0 text-white font-heading">DOM NAVALHA</h4>
+                    </div>
+                    <p class="small text-secondary mb-3">
+                        Fundada para resgatar a arte clássica da barbearia de cavalheiros. Aqui, cuidar de você é um ritual sagrado com toalha a vapor, lâminas de precisão e ambiente acolhedor.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-sm btn-outline-secondary text-warning border-secondary rounded-circle" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary text-warning border-secondary rounded-circle" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary text-warning border-secondary rounded-circle" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h5 class="footer-col-title">Navegação</h5>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+                        <li><a asp-controller="Home" asp-action="Sobre">Nossa História</a></li>
+                        <li><a asp-controller="Home" asp-action="Servicos">Cardápio de Serviços</a></li>
+                        <li><a asp-controller="Agendamento" asp-action="Index">Agendar Corte</a></li>
+                        <li><a asp-controller="Agendamento" asp-action="MinhasReservas">Consultar Reserva</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <h5 class="footer-col-title">Horários de Atendimento</h5>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-2 d-flex justify-content-between">
+                            <span>Segunda-feira:</span>
+                            <span class="text-warning">Fechado (Folga)</span>
+                        </li>
+                        <li class="mb-2 d-flex justify-content-between">
+                            <span>Terça a Sexta:</span>
+                            <span class="text-white">09:00 - 20:30</span>
+                        </li>
+                        <li class="mb-2 d-flex justify-content-between">
+                            <span>Sábado:</span>
+                            <span class="text-white">08:30 - 19:30</span>
+                        </li>
+                        <li class="mb-2 d-flex justify-content-between">
+                            <span>Domingo & Feriados:</span>
+                            <span class="text-white">10:00 - 16:00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3">
+                    <h5 class="footer-col-title">Localização & Contato</h5>
+                    <p class="small text-secondary mb-2">
+                        <i class="bi bi-geo-alt-fill text-warning me-2"></i> Rua Augusta, 1420 - Cerqueira César, São Paulo - SP
+                    </p>
+                    <p class="small text-secondary mb-2">
+                        <i class="bi bi-whatsapp text-warning me-2"></i> (11) 99999-8888
+                    </p>
+                    <p class="small text-secondary mb-3">
+                        <i class="bi bi-envelope-fill text-warning me-2"></i> contato@domnavalha.com.br
+                    </p>
+                    <a asp-controller="Agendamento" asp-action="Index" class="btn-gold-outline w-100 btn-sm text-center">
+                        <i class="bi bi-clock-history"></i> Marcar Horário Online
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-4 mt-2 border-top border-secondary border-opacity-25 d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
+                <p class="m-0">&copy; @DateTime.Now.Year Barbearia Dom Navalha. Todos os direitos reservados.</p>
+                <p class="m-0 mt-2 mt-md-0">Desenvolvido com excelência em ASP.NET Core &amp; .NET 10</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

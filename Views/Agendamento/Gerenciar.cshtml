@@ -1,0 +1,216 @@
+@model BarbeariaWeb.ViewModels.GerenciarReservasViewModel
+@{
+    ViewData["Title"] = "Gestão da Barbearia";
+}
+
+<section class="py-4" style="background: #101217; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+            <span class="badge-gold mb-1"><i class="bi bi-shield-lock-fill"></i> Painel Interno</span>
+            <h2 class="text-white m-0 font-heading">Controle de Agendamentos & Agenda</h2>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn-gold btn-sm">
+                <i class="bi bi-plus-circle me-1"></i> Nova Reserva Manual
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        @if (TempData["MensagemSucesso"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show bg-success bg-opacity-25 border-success text-white mb-4" role="alert">
+                <i class="bi bi-check-circle-fill text-success me-2"></i> @TempData["MensagemSucesso"]
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <!-- Cards de Métricas -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="vintage-card p-3 d-flex align-items-center gap-3">
+                    <div class="brand-icon flex-shrink-0" style="width: 50px; height: 50px; font-size: 1.4rem;">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <div>
+                        <div class="text-secondary small">Total Agendado Hoje</div>
+                        <h3 class="text-white m-0 font-heading">@Model.TotalHoje</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-3 d-flex align-items-center gap-3">
+                    <div class="brand-icon flex-shrink-0" style="width: 50px; height: 50px; font-size: 1.4rem; background: #22c55e;">
+                        <i class="bi bi-check2-all text-white"></i>
+                    </div>
+                    <div>
+                        <div class="text-secondary small">Confirmados</div>
+                        <h3 class="text-white m-0 font-heading">@Model.TotalConfirmados</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-3 d-flex align-items-center gap-3">
+                    <div class="brand-icon flex-shrink-0" style="width: 50px; height: 50px; font-size: 1.4rem; background: #eab308;">
+                        <i class="bi bi-hourglass-split text-dark"></i>
+                    </div>
+                    <div>
+                        <div class="text-secondary small">Pendentes</div>
+                        <h3 class="text-white m-0 font-heading">@Model.TotalPendentes</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros de Consulta -->
+        <div class="vintage-card p-3 p-md-4 mb-4">
+            <form asp-action="Gerenciar" method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label-vintage">Data da Agenda</label>
+                    <input type="date" name="data" value="@(Model.DataFiltro?.ToString("yyyy-MM-dd"))" class="input-vintage" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label-vintage">Status</label>
+                    <select name="status" class="input-vintage">
+                        <option value="Todos" selected="@(Model.StatusFiltro == "Todos")">Todos os Status</option>
+                        <option value="Confirmado" selected="@(Model.StatusFiltro == "Confirmado")">Confirmado</option>
+                        <option value="Pendente" selected="@(Model.StatusFiltro == "Pendente")">Pendente</option>
+                        <option value="Concluído" selected="@(Model.StatusFiltro == "Concluído")">Concluído</option>
+                        <option value="Cancelado" selected="@(Model.StatusFiltro == "Cancelado")">Cancelado</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex gap-2">
+                    <button type="submit" class="btn-gold flex-grow-1 py-2">
+                        <i class="bi bi-funnel-fill me-1"></i> Filtrar
+                    </button>
+                    <a asp-action="Gerenciar" class="btn btn-outline-secondary text-secondary py-2">
+                        Limpar
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tabela de Reservas -->
+        <div class="vintage-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0 align-middle">
+                    <thead style="background: #1f232d; border-bottom: 2px solid var(--gold-border);">
+                        <tr>
+                            <th class="py-3 px-3">Código</th>
+                            <th class="py-3 px-3">Cliente / Contato</th>
+                            <th class="py-3 px-3">Serviço & Preço</th>
+                            <th class="py-3 px-3">Barbeiro</th>
+                            <th class="py-3 px-3">Data & Horário</th>
+                            <th class="py-3 px-3">Status</th>
+                            <th class="py-3 px-3 text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Agendamentos.Any())
+                        {
+                            @foreach (var item in Model.Agendamentos)
+                            {
+                                <tr>
+                                    <td class="px-3">
+                                        <span class="fw-bold text-warning font-heading">@item.CodigoReserva</span>
+                                    </td>
+                                    <td class="px-3">
+                                        <div class="fw-bold text-white">@item.NomeCliente</div>
+                                        <div class="text-secondary small">
+                                            <a href="https://wa.me/55@(item.TelefoneCliente.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", ""))" target="_blank" class="text-success text-decoration-none">
+                                                <i class="bi bi-whatsapp me-1"></i>@item.TelefoneCliente
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="px-3">
+                                        <div class="text-white">@item.Servico?.Nome</div>
+                                        <div class="text-warning small fw-bold">@item.Servico?.Preco.ToString("C")</div>
+                                    </td>
+                                    <td class="px-3">
+                                        <div class="text-white">@item.Barbeiro?.Nome</div>
+                                        <div class="text-muted small">@item.Barbeiro?.Titulo</div>
+                                    </td>
+                                    <td class="px-3">
+                                        <div class="text-white fw-bold">@item.DataHora.ToString("dd/MM/yyyy")</div>
+                                        <div class="text-warning small font-heading">@item.DataHora.ToString("HH:mm")</div>
+                                    </td>
+                                    <td class="px-3">
+                                        @if (item.Status == "Confirmado")
+                                        {
+                                            <span class="status-pill status-confirmado">Confirmado</span>
+                                        }
+                                        else if (item.Status == "Concluído")
+                                        {
+                                            <span class="status-pill status-concluido">Concluído</span>
+                                        }
+                                        else if (item.Status == "Cancelado")
+                                        {
+                                            <span class="status-pill status-cancelado">Cancelado</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-pill status-pendente">@item.Status</span>
+                                        }
+                                    </td>
+                                    <td class="px-3 text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle text-warning border-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Alterar Status
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                                <li>
+                                                    <form asp-action="AtualizarStatus" method="post">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                        <input type="hidden" name="novoStatus" value="Confirmado" />
+                                                        <input type="hidden" name="dataFiltro" value="@Model.DataFiltro?.ToString("yyyy-MM-dd")" />
+                                                        <input type="hidden" name="statusFiltro" value="@Model.StatusFiltro" />
+                                                        <button type="submit" class="dropdown-item text-success"><i class="bi bi-check-circle me-2"></i> Confirmar</button>
+                                                    </form>
+                                                </li>
+                                                <li>
+                                                    <form asp-action="AtualizarStatus" method="post">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                        <input type="hidden" name="novoStatus" value="Concluído" />
+                                                        <input type="hidden" name="dataFiltro" value="@Model.DataFiltro?.ToString("yyyy-MM-dd")" />
+                                                        <input type="hidden" name="statusFiltro" value="@Model.StatusFiltro" />
+                                                        <button type="submit" class="dropdown-item text-primary"><i class="bi bi-check-all me-2"></i> Concluir Corte</button>
+                                                    </form>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form asp-action="AtualizarStatus" method="post">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                        <input type="hidden" name="novoStatus" value="Cancelado" />
+                                                        <input type="hidden" name="dataFiltro" value="@Model.DataFiltro?.ToString("yyyy-MM-dd")" />
+                                                        <input type="hidden" name="statusFiltro" value="@Model.StatusFiltro" />
+                                                        <button type="submit" class="dropdown-item text-danger"><i class="bi bi-x-circle me-2"></i> Cancelar Reserva</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="py-5 text-center text-muted">
+                                    <i class="bi bi-calendar-x fs-3 d-block text-warning mb-2"></i>
+                                    Nenhum agendamento encontrado para os filtros selecionados.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

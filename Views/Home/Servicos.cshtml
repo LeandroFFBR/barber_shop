@@ -1,0 +1,98 @@
+@model List<BarbeariaWeb.Models.Servico>
+@{
+    ViewData["Title"] = "Serviços & Preços";
+    var categorias = Model.Select(s => s.Categoria).Distinct().ToList();
+}
+
+<!-- BANNER TOPO -->
+<section class="py-5" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 60%), #12141a; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-4 text-center">
+        <span class="badge-gold mb-3">Tabela Oficial</span>
+        <h1 class="display-4 text-white mb-3">Cardápio de Serviços & Cuidados</h1>
+        <div class="gold-divider-center"></div>
+        <p class="text-secondary mx-auto" style="max-width: 680px; font-size: 1.15rem;">
+            Transparência, produtos de alto padrão e o tempo dedicado exclusivamente para o seu bem-estar.
+        </p>
+    </div>
+</section>
+
+<!-- LISTA DE SERVIÇOS POR CATEGORIA -->
+<section class="py-5">
+    <div class="container py-4">
+        <!-- Abas / Filtros de Categoria -->
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-5">
+            <button class="btn btn-sm btn-gold filter-btn active" data-filter="all">Todos os Serviços</button>
+            @foreach (var cat in categorias)
+            {
+                <button class="btn btn-sm btn-gold-outline filter-btn" data-filter="@cat.ToLower()">@cat</button>
+            }
+        </div>
+
+        <div class="row g-4" id="servicesGrid">
+            @foreach (var servico in Model)
+            {
+                <div class="col-md-6 col-lg-4 service-grid-item" data-category="@servico.Categoria.ToLower()">
+                    <div class="service-card">
+                        @if (servico.Destaque)
+                        {
+                            <span class="service-badge"><i class="bi bi-star-fill text-warning me-1"></i> Destaque</span>
+                        }
+                        
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="service-icon-box m-0">
+                                    <i class="bi bi-scissors"></i>
+                                </div>
+                                <span class="badge bg-secondary bg-opacity-25 text-warning px-3 py-2 rounded-pill small">
+                                    @servico.Categoria
+                                </span>
+                            </div>
+
+                            <h3 class="text-white mb-2 font-heading" style="font-size: 1.35rem;">@servico.Nome</h3>
+                            <p class="small text-secondary mb-4" style="min-height: 55px;">@servico.Descricao</p>
+                        </div>
+
+                        <div class="pt-3 border-top border-secondary border-opacity-25">
+                            <div class="d-flex justify-content-between align-items-baseline mb-3">
+                                <div>
+                                    <span class="service-price">@servico.Preco.ToString("C")</span>
+                                </div>
+                                <div class="service-duration">
+                                    <i class="bi bi-clock me-1 text-warning"></i> @servico.DuracaoMinutos minutos
+                                </div>
+                            </div>
+                            
+                            <a asp-controller="Agendamento" asp-action="Index" asp-route-servicoId="@servico.Id" class="btn-gold w-100 text-center btn-sm py-2">
+                                <i class="bi bi-calendar2-plus me-1"></i> Reservar Este Horário
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('btn-gold', 'active');
+                    b.classList.add('btn-gold-outline');
+                });
+                this.classList.remove('btn-gold-outline');
+                this.classList.add('btn-gold', 'active');
+
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.service-grid-item').forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+}

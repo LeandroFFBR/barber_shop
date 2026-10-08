@@ -1,0 +1,97 @@
+@model BarbeariaWeb.ViewModels.ConfirmacaoViewModel
+@{
+    ViewData["Title"] = "Reserva Confirmada!";
+    var a = Model.Agendamento;
+}
+
+<section class="py-5">
+    <div class="container" style="max-width: 780px;">
+        <div class="text-center mb-4">
+            <div class="brand-icon mx-auto mb-3" style="width: 70px; height: 70px; font-size: 2.2rem; background: linear-gradient(135deg, #22c55e, #15803d);">
+                <i class="bi bi-check-lg text-white"></i>
+            </div>
+            <span class="badge-gold mb-2"><i class="bi bi-shield-check"></i> Agendamento Garantido</span>
+            <h1 class="display-5 text-white mb-2">Sua Cadeira Está Reservada!</h1>
+            <p class="text-secondary">
+                Agradecemos a confiança, <strong>@a.NomeCliente</strong>. Seu horário já está bloqueado na agenda do profissional.
+            </p>
+        </div>
+
+        <!-- Voucher VIP Card -->
+        <div class="voucher-card mb-4">
+            <div class="voucher-ribbon">CONFIRMADO</div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary border-opacity-25 pb-3">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="brand-icon" style="width: 38px; height: 38px; font-size: 1.1rem;"><i class="bi bi-scissors"></i></span>
+                    <div>
+                        <h4 class="m-0 text-white font-heading">DOM NAVALHA</h4>
+                        <span class="text-muted small">Barbearia Clássica & Club</span>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <span class="status-pill status-confirmado">@a.Status</span>
+                </div>
+            </div>
+
+            <div class="text-center my-4">
+                <div class="text-muted small text-uppercase letter-spacing-1">Código de Confirmação</div>
+                <div class="voucher-code-badge">
+                    @a.CodigoReserva
+                </div>
+                <p class="small text-muted mb-0">Apresente este código ou seu nome ao chegar à recepção.</p>
+            </div>
+
+            <div class="row g-4 my-2 p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                <div class="col-sm-6">
+                    <div class="text-muted small">Serviço Selecionado:</div>
+                    <div class="text-white fw-bold fs-5">@a.Servico?.Nome</div>
+                    <div class="text-warning small"><i class="bi bi-clock me-1"></i> @a.Servico?.DuracaoMinutos minutos de atendimento</div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="text-muted small">Barbeiro Designado:</div>
+                    <div class="text-white fw-bold fs-5">@a.Barbeiro?.Nome</div>
+                    <div class="text-secondary small">@a.Barbeiro?.Titulo</div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="text-muted small">Data e Horário:</div>
+                    <div class="text-warning fw-bold fs-4">@a.DataHora.ToString("dd/MM/yyyy 'às' HH:mm")</div>
+                    <div class="text-secondary small">Recomendamos chegar 10 min antes</div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="text-muted small">Valor a Pagar no Local:</div>
+                    <div class="text-white fw-bold fs-3 font-heading">@a.Servico?.Preco.ToString("C")</div>
+                    <div class="text-muted small">Dinheiro, Cartão ou PIX</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-geo-alt-fill text-warning fs-4"></i>
+                    <div>
+                        <div class="text-white fw-semibold small">Endereço da Barbearia:</div>
+                        <div class="text-secondary small">Rua Augusta, 1420 - Jardins, São Paulo - SP (Estacionamento com manobrista gratuito)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ações do Voucher -->
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-5">
+            <a href="@Model.WhatsAppMensagemUrl" target="_blank" class="btn btn-success py-3 px-4 d-flex align-items-center justify-content-center gap-2 fw-bold shadow">
+                <i class="bi bi-whatsapp fs-5"></i> Salvar Detalhes no WhatsApp
+            </a>
+
+            <button onclick="window.print()" class="btn btn-outline-secondary text-light py-3 px-4 d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-printer fs-5"></i> Imprimir Comprovante
+            </button>
+
+            <a asp-controller="Home" asp-action="Index" class="btn-gold-outline py-3 px-4 d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-house fs-5"></i> Voltar ao Início
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,170 @@
+@{
+    ViewData["Title"] = "Nossa História & Tradição";
+    var barbeiros = ViewBag.Barbeiros as List<BarbeariaWeb.Models.Barbeiro> ?? new();
+}
+
+<!-- BANNER TOPO -->
+<section class="py-5" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 60%), #12141a; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-4 text-center">
+        <span class="badge-gold mb-3">Desde 2012</span>
+        <h1 class="display-4 text-white mb-3">A Arte da Cutelaria Clássica</h1>
+        <div class="gold-divider-center"></div>
+        <p class="text-secondary mx-auto" style="max-width: 680px; font-size: 1.15rem;">
+            Nascida da paixão pela elegância atemporal, a Dom Navalha combina a nobreza dos clubes clássicos de cavalheiros com o mais alto padrão em visagismo contemporâneo.
+        </p>
+    </div>
+</section>
+
+<!-- HISTÓRIA E FILOSOFIA -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="badge-gold mb-3">Nosso Manifesto</span>
+                <h2 class="display-6 text-white mb-4">Mais que um Corte: Um Momento para Desacelerar</h2>
+                <div class="gold-divider"></div>
+                <p class="text-secondary leading-relaxed">
+                    Em um mundo apressado onde tudo é instantâneo e descartável, a <strong class="text-warning">Dom Navalha</strong> foi criada para ser um porto seguro. Um lugar onde o tempo corre no compasso certo da conversa boa, do café moído na hora e do chiado da toalha aquecida no vapor.
+                </p>
+                <p class="text-secondary leading-relaxed">
+                    Nossos mestres barbeiros não apenas cortam fios: eles estudam a harmonia das linhas do seu rosto, a textura do seu cabelo e a densidade da sua barba para entregar um alinhamento sob medida que eleva sua autoestima e presença.
+                </p>
+                <div class="row g-3 pt-3">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2 text-white">
+                            <i class="bi bi-check2-circle text-warning fs-5"></i>
+                            <span class="small fw-semibold">Lâminas alemãs de alto corte</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2 text-white">
+                            <i class="bi bi-check2-circle text-warning fs-5"></i>
+                            <span class="small fw-semibold">Produtos importados e pomadas matte</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2 text-white">
+                            <i class="bi bi-check2-circle text-warning fs-5"></i>
+                            <span class="small fw-semibold">Ambiente acolhedor e climatizado</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2 text-white">
+                            <i class="bi bi-check2-circle text-warning fs-5"></i>
+                            <span class="small fw-semibold">Whisky, cerveja e café cortesia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Mestre Barbeiro cortando com tesoura" 
+                         class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25" />
+                    
+                    <div class="position-absolute bottom-0 start-0 m-4 p-3 rounded-3 bg-dark bg-opacity-90 border border-warning border-opacity-25 backdrop-blur d-none d-sm-block">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-shield-shaded text-warning fs-1"></i>
+                            <div>
+                                <div class="text-white fw-bold">Tradição & Autenticidade</div>
+                                <div class="text-muted small">Cuidado individualizado de cavalheiro</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- O RITUAL DA TOALHA QUENTE & AMBIENTE -->
+<section class="py-5" style="background: #111319;">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-gold mb-2">Experiência Sensorial</span>
+            <h2 class="display-6 text-white mb-3">O Ritual da Toalha Quente</h2>
+            <div class="gold-divider-center"></div>
+            <p class="text-secondary">
+                Entenda por que o nosso método de barboterapia é o mais elogiado de São Paulo.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100 text-center">
+                    <div class="service-icon-box mx-auto mb-3">
+                        <span class="fw-bold">1</span>
+                    </div>
+                    <h4 class="text-white mb-3 font-heading" style="font-size: 1.2rem;">Preparo com Óleos Nobres</h4>
+                    <p class="small text-secondary">
+                        Aplicação de óleos essenciais com extrato de argan e eucalipto para hidratar os fios e criar uma película protetora na pele.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100 text-center">
+                    <div class="service-icon-box mx-auto mb-3">
+                        <span class="fw-bold">2</span>
+                    </div>
+                    <h4 class="text-white mb-3 font-heading" style="font-size: 1.2rem;">Toalha Vaporizada</h4>
+                    <p class="small text-secondary">
+                        A toalha quente abre os poros suavemente, amolece as cutículas dos pelos e proporciona um relaxamento muscular profundo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="vintage-card p-4 h-100 text-center">
+                    <div class="service-icon-box mx-auto mb-3">
+                        <span class="fw-bold">3</span>
+                    </div>
+                    <h4 class="text-white mb-3 font-heading" style="font-size: 1.2rem;">Lâmina de Precisão & Refresco</h4>
+                    <p class="small text-secondary">
+                        Navalhete descartável de uso único com deslize suave, finalizado com toalha fria para fechar os poros e pós-barba mentolado.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALERIA DO ESPAÇO -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-gold mb-2">Nosso Espaço</span>
+            <h2 class="display-6 text-white mb-3">Conheça o Nosso Ambiente</h2>
+            <div class="gold-divider-center"></div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80" 
+                     alt="Salão Principal" class="img-fluid rounded-4 h-100 object-fit-cover shadow-sm" style="min-height: 260px;" />
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80" 
+                     alt="Utensílios de Cutelaria" class="img-fluid rounded-4 h-100 object-fit-cover shadow-sm" style="min-height: 260px;" />
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=800&q=80" 
+                     alt="Lounge & Bebidas" class="img-fluid rounded-4 h-100 object-fit-cover shadow-sm" style="min-height: 260px;" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CHAMADA PARA AGENDAMENTO -->
+<section class="py-5" style="background: #141720; border-top: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-4 text-center">
+        <h2 class="display-6 text-white mb-3">Venha Viver essa Experiência</h2>
+        <p class="text-secondary max-w-600 mx-auto mb-4" style="max-width: 600px;">
+            Garanta seu atendimento personalizado com um de nossos profissionais.
+        </p>
+        <a asp-controller="Agendamento" asp-action="Index" class="btn-gold btn-lg px-5">
+            <i class="bi bi-calendar-check me-2"></i> Agendar Atendimento
+        </a>
+    </div>
+</section>

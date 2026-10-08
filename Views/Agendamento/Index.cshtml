@@ -1,0 +1,371 @@
+@model BarbeariaWeb.ViewModels.AgendamentoViewModel
+@{
+    ViewData["Title"] = "Reservar Horário";
+}
+
+<section class="py-5" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 60%), #12141a; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-3 text-center">
+        <span class="badge-gold mb-2"><i class="bi bi-clock-history"></i> Agendamento Online</span>
+        <h1 class="display-5 text-white mb-2">Reserve Seu Momento na Barbearia</h1>
+        <div class="gold-divider-center"></div>
+        <p class="text-secondary mx-auto mb-0" style="max-width: 650px;">
+            Escolha seu serviço, o barbeiro da sua preferência e o melhor horário em apenas alguns cliques.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container booking-container">
+        <!-- Indicador de Passos Visual -->
+        <div class="wizard-steps d-none d-md-flex">
+            <div class="wizard-step-node active" id="node-step-1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Serviço</div>
+            </div>
+            <div class="wizard-step-node" id="node-step-2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Barbeiro</div>
+            </div>
+            <div class="wizard-step-node" id="node-step-3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Data & Horário</div>
+            </div>
+            <div class="wizard-step-node" id="node-step-4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Seus Dados</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Formulário Principal -->
+            <div class="col-lg-8">
+                <div class="vintage-card p-4 p-md-5">
+                    <form asp-action="Index" method="post" id="formAgendamento">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- ETAPA 1: ESCOLHA DO SERVIÇO -->
+                        <div class="mb-5">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="text-white m-0 font-heading">
+                                    <span class="text-warning me-2">1.</span> Escolha o Serviço
+                                </h4>
+                                <span class="text-secondary small">Clique para selecionar</span>
+                            </div>
+
+                            <span asp-validation-for="ServicoId" class="text-danger small d-block mb-2"></span>
+
+                            <div class="selectable-grid">
+                                @foreach (var servico in Model.ServicosDisponiveis)
+                                {
+                                    <label class="selectable-item" data-preco="@servico.Preco" data-nome="@servico.Nome" data-duracao="@servico.DuracaoMinutos min">
+                                        <input type="radio" asp-for="ServicoId" value="@servico.Id" class="radio-servico" />
+                                        <div class="selectable-box">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="text-white mb-0 font-heading" style="font-size: 1.1rem;">@servico.Nome</h5>
+                                                </div>
+                                                <div class="badge bg-dark text-warning border border-secondary border-opacity-50 small mb-2">
+                                                    @servico.Categoria
+                                                </div>
+                                                <p class="text-secondary small mb-3" style="font-size: 0.82rem;">@servico.Descricao</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-baseline pt-2 border-top border-secondary border-opacity-25">
+                                                <span class="text-warning fw-bold fs-5">@servico.Preco.ToString("C")</span>
+                                                <span class="text-muted small"><i class="bi bi-clock me-1"></i> @servico.DuracaoMinutos min</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- ETAPA 2: ESCOLHA DO BARBEIRO -->
+                        <div class="mb-5 pt-4 border-top border-secondary border-opacity-25">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="text-white m-0 font-heading">
+                                    <span class="text-warning me-2">2.</span> Escolha o Profissional
+                                </h4>
+                                <span class="text-secondary small">Seu barbeiro de preferência</span>
+                            </div>
+
+                            <span asp-validation-for="BarbeiroId" class="text-danger small d-block mb-2"></span>
+
+                            <div class="selectable-grid">
+                                @foreach (var barbeiro in Model.BarbeirosDisponiveis)
+                                {
+                                    <label class="selectable-item" data-barbeiro-nome="@barbeiro.Nome" data-barbeiro-titulo="@barbeiro.Titulo">
+                                        <input type="radio" asp-for="BarbeiroId" value="@barbeiro.Id" class="radio-barbeiro" />
+                                        <div class="selectable-box">
+                                            <div class="barber-radio-content">
+                                                <img src="@barbeiro.FotoUrl" alt="@barbeiro.Nome" class="barber-radio-avatar" />
+                                                <div>
+                                                    <h5 class="text-white mb-0 font-heading" style="font-size: 1.05rem;">@barbeiro.Nome</h5>
+                                                    <div class="text-warning small" style="font-size: 0.8rem;">@barbeiro.Titulo</div>
+                                                    <div class="small text-muted mt-1">
+                                                        <i class="bi bi-star-fill text-warning"></i> @barbeiro.Avaliacao.ToString("F1") (@barbeiro.ExperienciaAnos anos exp.)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- ETAPA 3: DATA E HORÁRIO -->
+                        <div class="mb-5 pt-4 border-top border-secondary border-opacity-25">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="text-white m-0 font-heading">
+                                    <span class="text-warning me-2">3.</span> Data & Horário Desejado
+                                </h4>
+                                <span class="text-secondary small">Slots disponíveis</span>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label asp-for="Data" class="form-label-vintage">Data do Agendamento</label>
+                                    <input asp-for="Data" type="date" class="input-vintage" id="inputDataAgendamento" 
+                                           min="@DateTime.Today.ToString("yyyy-MM-dd")" 
+                                           value="@Model.Data.ToString("yyyy-MM-dd")" />
+                                    <span asp-validation-for="Data" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <div class="text-muted small pb-2">
+                                        <i class="bi bi-info-circle text-warning me-1"></i> Os horários abaixo atualizam conforme o barbeiro e data escolhidos.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="form-label-vintage">Selecione o Horário Disponível</label>
+                            <span asp-validation-for="Horario" class="text-danger small d-block mb-2"></span>
+
+                            <div id="loadingHorarios" class="text-center py-3 d-none">
+                                <div class="spinner-border spinner-border-sm text-warning" role="status"></div>
+                                <span class="text-muted ms-2 small">Buscando horários disponíveis...</span>
+                            </div>
+
+                            <div class="time-slots-grid" id="containerHorarios">
+                                @if (Model.HorariosDisponiveis != null && Model.HorariosDisponiveis.Any())
+                                {
+                                    @foreach (var hora in Model.HorariosDisponiveis)
+                                    {
+                                        <label class="time-slot-chip">
+                                            <input type="radio" asp-for="Horario" value="@hora" class="radio-horario" />
+                                            <div class="time-slot-box">@hora</div>
+                                        </label>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12 text-warning small py-2">
+                                        Nenhum horário livre restante para hoje neste profissional. Por favor, escolha outra data!
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- ETAPA 4: DADOS DO CLIENTE -->
+                        <div class="mb-4 pt-4 border-top border-secondary border-opacity-25">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="text-white m-0 font-heading">
+                                    <span class="text-warning me-2">4.</span> Seus Dados de Contato
+                                </h4>
+                                <span class="text-secondary small">Para confirmação da reserva</span>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="NomeCliente" class="form-label-vintage">Seu Nome Completo *</label>
+                                    <input asp-for="NomeCliente" class="input-vintage" placeholder="Ex: Felipe Oliveira" />
+                                    <span asp-validation-for="NomeCliente" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="TelefoneCliente" class="form-label-vintage">WhatsApp / Celular *</label>
+                                    <input asp-for="TelefoneCliente" class="input-vintage" id="inputTelefone" placeholder="(11) 98765-4321" />
+                                    <span asp-validation-for="TelefoneCliente" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="EmailCliente" class="form-label-vintage">E-mail (opcional, para receber o voucher)</label>
+                                    <input asp-for="EmailCliente" type="email" class="input-vintage" placeholder="felipe@email.com" />
+                                    <span asp-validation-for="EmailCliente" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Observacoes" class="form-label-vintage">Observações ou Preferências (opcional)</label>
+                                    <textarea asp-for="Observacoes" rows="2" class="input-vintage" placeholder="Ex: Gosto da barba bem desenhada e toalha bem quente."></textarea>
+                                    <span asp-validation-for="Observacoes" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTÃO DE FINALIZAÇÃO -->
+                        <div class="pt-4 border-top border-secondary border-opacity-25">
+                            <button type="submit" class="btn-gold w-100 py-3 fs-5 shadow">
+                                <i class="bi bi-check2-circle me-2"></i> Confirmar e Gerar Minha Reserva
+                            </button>
+                            <p class="text-muted text-center small mt-2 mb-0">
+                                <i class="bi bi-lock-fill me-1"></i> Pagamento no local (Cartão, Dinheiro ou PIX) após o atendimento.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CARD LATERAL: RESUMO EM TEMPO REAL -->
+            <div class="col-lg-4">
+                <div class="vintage-card p-4 sticky-top" style="top: 100px;">
+                    <div class="vintage-card-header-gold px-0 pt-0 mb-3">
+                        <span class="badge-gold mb-2"><i class="bi bi-receipt"></i> Resumo da Reserva</span>
+                        <h4 class="text-white m-0 font-heading">Seu Agendamento</h4>
+                    </div>
+
+                    <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                        <div class="text-muted small">Serviço Selecionado</div>
+                        <div class="text-white fw-bold fs-5" id="summaryServico">Selecione um serviço</div>
+                        <div class="text-warning small" id="summaryDuracao">-- min</div>
+                    </div>
+
+                    <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                        <div class="text-muted small">Profissional</div>
+                        <div class="text-white fw-bold" id="summaryBarbeiro">Selecione um barbeiro</div>
+                        <div class="text-secondary small" id="summaryBarbeiroTitulo">Mestre Barbeiro</div>
+                    </div>
+
+                    <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                        <div class="text-muted small">Data e Horário</div>
+                        <div class="text-white fw-bold" id="summaryData">--/--/----</div>
+                        <div class="text-warning fw-semibold fs-5" id="summaryHorario">--:--</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-baseline mb-4">
+                        <div class="text-secondary">Valor Estimado:</div>
+                        <div class="text-warning fw-bold fs-3 font-heading" id="summaryPreco">R$ 0,00</div>
+                    </div>
+
+                    <div class="p-3 rounded-3 bg-dark bg-opacity-75 border border-secondary border-opacity-25 small text-secondary">
+                        <i class="bi bi-shield-check text-warning me-1"></i>
+                        <strong>Garantia Dom Navalha:</strong> Cancelamento ou remarcação gratuita com até 2h de antecedência.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            // Atualiza o resumo lateral dinamicamente
+            function updateSummary() {
+                // 1. Serviço
+                const selectedServico = $('input.radio-servico:checked');
+                if (selectedServico.length > 0) {
+                    const label = selectedServico.closest('.selectable-item');
+                    const nome = label.data('nome');
+                    const preco = label.data('preco');
+                    const duracao = label.data('duracao');
+                    $('#summaryServico').text(nome);
+                    $('#summaryDuracao').text(duracao);
+                    if (preco) {
+                        $('#summaryPreco').text('R$ ' + parseFloat(preco).toFixed(2).replace('.', ','));
+                    }
+                    $('#node-step-1').addClass('completed');
+                }
+
+                // 2. Barbeiro
+                const selectedBarbeiro = $('input.radio-barbeiro:checked');
+                if (selectedBarbeiro.length > 0) {
+                    const label = selectedBarbeiro.closest('.selectable-item');
+                    const nome = label.data('barbeiro-nome');
+                    const titulo = label.data('barbeiro-titulo');
+                    $('#summaryBarbeiro').text(nome);
+                    $('#summaryBarbeiroTitulo').text(titulo);
+                    $('#node-step-2').addClass('completed');
+                }
+
+                // 3. Data
+                const dataVal = $('#inputDataAgendamento').val();
+                if (dataVal) {
+                    const partes = dataVal.split('-');
+                    if (partes.length === 3) {
+                        $('#summaryData').text(partes[2] + '/' + partes[1] + '/' + partes[0]);
+                    }
+                }
+
+                // 4. Horário
+                const selectedHorario = $('input.radio-horario:checked').val();
+                if (selectedHorario) {
+                    $('#summaryHorario').text(selectedHorario);
+                    $('#node-step-3').addClass('completed');
+                } else {
+                    $('#summaryHorario').text('Escolha o horário');
+                }
+            }
+
+            // Mudança de Serviço
+            $('input.radio-servico').on('change', function() {
+                updateSummary();
+            });
+
+            // Mudança de Barbeiro ou Data -> Recarrega horários via AJAX
+            function carregarHorarios() {
+                const barbeiroId = $('input.radio-barbeiro:checked').val();
+                const data = $('#inputDataAgendamento').val();
+
+                if (!barbeiroId || !data) return;
+
+                $('#loadingHorarios').removeClass('d-none');
+                $('#containerHorarios').html('');
+
+                $.getJSON('/Agendamento/ObterHorarios', { barbeiroId: barbeiroId, data: data }, function(resp) {
+                    $('#loadingHorarios').addClass('d-none');
+                    if (resp.sucesso && resp.horarios && resp.horarios.length > 0) {
+                        let html = '';
+                        resp.horarios.forEach((hora, idx) => {
+                            const isChecked = idx === 0 ? 'checked' : '';
+                            html += `
+                                <label class="time-slot-chip">
+                                    <input type="radio" name="Horario" value="${hora}" class="radio-horario" ${isChecked} />
+                                    <div class="time-slot-box">${hora}</div>
+                                </label>
+                            `;
+                        });
+                        $('#containerHorarios').html(html);
+
+                        // Bind evento de mudança dos novos radios
+                        $('input.radio-horario').on('change', updateSummary);
+                        updateSummary();
+                    } else {
+                        $('#containerHorarios').html('<div class="col-12 text-warning small py-2"><i class="bi bi-exclamation-triangle me-1"></i> Não há horários disponíveis para este profissional nesta data. Por favor selecione outra data.</div>');
+                        $('#summaryHorario').text('Sem horário vago');
+                    }
+                }).fail(function() {
+                    $('#loadingHorarios').addClass('d-none');
+                    $('#containerHorarios').html('<div class="col-12 text-danger small py-2">Erro ao buscar horários. Tente novamente.</div>');
+                });
+            }
+
+            $('input.radio-barbeiro').on('change', function() {
+                updateSummary();
+                carregarHorarios();
+            });
+
+            $('#inputDataAgendamento').on('change', function() {
+                updateSummary();
+                carregarHorarios();
+            });
+
+            $('input.radio-horario').on('change', function() {
+                updateSummary();
+            });
+
+            // Inicialização inicial
+            updateSummary();
+        });
+    </script>
+}

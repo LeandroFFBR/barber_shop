@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Contato & Localização";
+}
+
+<section class="py-5" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 60%), #12141a; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="container py-4 text-center">
+        <span class="badge-gold mb-3">Fale Conosco</span>
+        <h1 class="display-4 text-white mb-3">Onde Estamos & Como Falar Conosco</h1>
+        <div class="gold-divider-center"></div>
+        <p class="text-secondary mx-auto" style="max-width: 680px; font-size: 1.15rem;">
+            Estamos situados no coração dos Jardins, com estacionamento conveniado e acesso fácil.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <div class="vintage-card p-4 p-md-5 h-100">
+                    <h3 class="text-white mb-4 font-heading">Informações de Contato</h3>
+                    
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="brand-icon flex-shrink-0">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <div class="text-white fw-bold">Endereço</div>
+                            <div class="text-secondary small">Rua Augusta, 1420 - Jardins / Cerqueira César</div>
+                            <div class="text-muted small">São Paulo - SP, CEP 01304-001</div>
+                            <div class="text-warning small mt-1"><i class="bi bi-car-front-fill me-1"></i> Estacionamento gratuito com manobrista</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="brand-icon flex-shrink-0">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div>
+                            <div class="text-white fw-bold">Telefone & WhatsApp</div>
+                            <div class="text-secondary small">(11) 99999-8888 / (11) 3255-0000</div>
+                            <div class="text-muted small">Atendimento rápido para dúvidas e eventos</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="brand-icon flex-shrink-0">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div>
+                            <div class="text-white fw-bold">Horário de Funcionamento</div>
+                            <div class="text-secondary small">Terça a Sexta: 09:00 - 20:30</div>
+                            <div class="text-secondary small">Sábado: 08:30 - 19:30</div>
+                            <div class="text-muted small">Segunda-feira: Fechado para descanso da equipe</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-4">
+                        <a href="https://wa.me/5511999998888" target="_blank" class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-whatsapp fs-5"></i> Iniciar Conversa no WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="vintage-card p-4 p-md-5 h-100">
+                    <h3 class="text-white mb-2 font-heading">Envie uma Mensagem</h3>
+                    <p class="text-secondary small mb-4">Tem alguma dúvida, quer agendar Dia do Noivo ou evento corporativo? Envie sua mensagem.</p>
+
+                    <form onsubmit="alert('Obrigado! Sua mensagem foi recebida com sucesso pela equipe da Barbearia Dom Navalha.'); return false;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-vintage">Seu Nome Completo</label>
+                                <input type="text" class="input-vintage" placeholder="Ex: Lucas Ferreira" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-vintage">WhatsApp ou Telefone</label>
+                                <input type="tel" class="input-vintage" placeholder="(11) 99999-9999" required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-vintage">E-mail</label>
+                                <input type="email" class="input-vintage" placeholder="lucas@exemplo.com" required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-vintage">Assunto</label>
+                                <select class="input-vintage">
+                                    <option>Dúvidas Gerais</option>
+                                    <option>Dia do Noivo / Casamento</option>
+                                    <option>Eventos Corporativos</option>
+                                    <option>Trabalhe Conosco</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-vintage">Mensagem</label>
+                                <textarea class="input-vintage" rows="4" placeholder="Como podemos te ajudar?" required></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn-gold w-100 py-3">
+                                    <i class="bi bi-send-fill me-2"></i> Enviar Mensagem
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
